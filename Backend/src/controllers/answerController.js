@@ -1,7 +1,14 @@
+require("dotenv").config();
+
+let WSid = process.env.WTwilioSid;
+let WToken = process.env.WTwilioToken;
+
+let AirApi = process.env.AirtableKey;
+
+const client = require("twilio")(WSid, WToken);
+
 var Airtable = require("airtable");
-var base = new Airtable({ apiKey: "key5mUwt9UTuxleoy" }).base(
-  "appw5mc6a3bucYJn6"
-);
+var base = new Airtable({ apiKey: AirApi }).base("appw5mc6a3bucYJn6");
 function verifyQuestions() {
   return new Promise((accept, reject) => {
     base("Questions")
@@ -12,16 +19,7 @@ function verifyQuestions() {
         if (err) {
           return reject(err);
         }
-        // let arr = [];
-        // let without = [];
-        // records.forEach(function (record) {
-        //   arr.push([record.fields.body, record.fields.answer]);
-        // });
-        // arr.forEach(function (arra) {
-        //   if (arra[1] == null && arra[1] == "") {
-        //     without.push([arra[0], arra[1]]);
-        //   }
-        // });
+
         let questions = records
           .map((item) => {
             return {
@@ -50,6 +48,13 @@ module.exports = {
   },
 
   async store(req, res) {
-    
+    let questions = await verifyQuestions();
+    client.messages
+      .create({
+        body: questions[0],
+        from: "whatsapp: +13343674315",
+        to: "whatsapp: +5521982402606",
+      })
+      .then((message) => console.log(message));
   },
 };
