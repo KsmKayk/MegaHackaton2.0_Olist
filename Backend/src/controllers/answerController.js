@@ -41,6 +41,7 @@ function verifyQuestions() {
       });
   });
 }
+
 module.exports = {
   async index(req, res) {
     let result = await verifyQuestions();
@@ -48,13 +49,8 @@ module.exports = {
   },
 
   async store(req, res) {
-    let questions = await verifyQuestions();
-    client.messages
-      .create({
-        body: questions[0],
-        from: "whatsapp: +13343674315",
-        to: "whatsapp: +5521982402606",
-      })
-      .then((message) => console.log(message));
+    const { id, answer } = req.body;
+
+    return console.log(req.body);
   },
 };
