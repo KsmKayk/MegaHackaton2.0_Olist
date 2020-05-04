@@ -8,7 +8,8 @@ const routes = Router();
 
 //routes.get("/mercadoLivreNotfication", mercadoLivreController.index);
 //routes.post("/mercadoLivreNotfication", mercadoLivreController.store);
-routes.get("/allQuestions", questionController.index);
+routes.get("/Questions", questionController.index);
+routes.post("/Questions", questionController.store);
 routes.get("/answers", answerController.index);
 routes.post("/answers", answerController.store);
 routes.get("/users", userController.index);

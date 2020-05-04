@@ -3,7 +3,6 @@ import json
 import time
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
-from json import JSONEncoder
 import asyncio
 
 # Create a new chat bot named Charlie
@@ -16,7 +15,7 @@ trainer.train([
 ])
 
 async def answering():
-        data = requests.get('http://0516ab31.ngrok.io/answers')
+        data = requests.get('http://57a5b852.ngrok.io/answers')
         time.sleep(2)
         response = data.json()
         parsed = json.loads(json.dumps(response))
@@ -31,7 +30,7 @@ async def answering():
         "id": id,
         "answer": str(answer)
         }
-        requests.post("http://0516ab31.ngrok.io/answers", json=toSend)
+        requests.post("http://57a5b852.ngrok.io/answers", json=toSend)
         chatbot.storage.drop()
         time.sleep(5)
 

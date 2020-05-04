@@ -51,6 +51,30 @@ module.exports = {
   async store(req, res) {
     const { id, answer } = req.body;
 
-    return console.log(req.body);
+    function updateQuestions() {
+      return new Promise((accept, reject) => {
+        base("Questions").update(
+          [
+            {
+              id: id,
+              fields: {
+                answer: answer,
+              },
+            },
+          ],
+          function (err, records) {
+            if (err) {
+              console.log(err);
+              return;
+            }
+            return accept(records);
+          }
+        );
+      });
+    }
+    let update = await updateQuestions();
+    console.log(update);
+
+    return res.json(update);
   },
 };

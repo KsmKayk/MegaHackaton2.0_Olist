@@ -28,4 +28,31 @@ module.exports = {
     let result = await airtableGet();
     return res.json(result);
   },
+  async store(req, res) {
+    const { reportedAt, status, body } = req.body;
+    function addQuestion() {
+      return new Promise((accept, reject) => {
+        base("Questions").create(
+          [
+            {
+              fields: {
+                reportedAt: reportedAt,
+                status: status,
+                body: body,
+              },
+            },
+          ],
+          function (err, records) {
+            if (err) {
+              console.log(err);
+              return reject(err);
+            }
+            return accept(records);
+          }
+        );
+      });
+    }
+    let add = await addQuestion();
+    return res.json(add);
+  },
 };
